@@ -1,3 +1,4 @@
+import { Pattern } from "pattern";
 import Method from "./method";
 
 describe("with a method", () => {

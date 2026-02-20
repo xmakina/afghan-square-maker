@@ -3,14 +3,12 @@ export class Pattern {
     public readonly height: number,
     public readonly width: number,
   ) {
-    const rows = Array(height)
+    this.rows = Array(height)
       .fill(false)
-      .map(() => new Array(width).fill(false));
-
-    this.rows = rows;
+      .map(() => new Array(width).fill(false));;
   }
 
-  private readonly rows: Array<Array<boolean>>;
+  public readonly rows: Array<Array<boolean>>
 
   public getAt(x: number, y: number) {
     return this.rows[y][x];

@@ -10,6 +10,7 @@ describe("with a pattern", () => {
 
     it("is all false", () => {
       expect(subject.getAt(0, 0)).toBeFalsy();
+      expect(subject.rows[0][0]).toBeFalsy();
       expect(subject.getAt(1, 1)).toBeFalsy();
       expect(subject.getAt(2, 2)).toBeFalsy();
     });
