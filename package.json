@@ -1,8 +1,12 @@
 {
   "name": "afghan-square-maker",
   "version": "1.0.0",
-  "description": "",
+  "description": "Convert a 1bit canvas to a knitting pattern",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
