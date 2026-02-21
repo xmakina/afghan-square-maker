@@ -1,7 +1,7 @@
-export class Instruction {
-  static From(isOdd: boolean, row: boolean[]) {
+export default class Instruction {
+  static FromRow(isOdd: boolean, row: boolean[]) {
     const groupings = [];
-    for (let i = 0; i < row.length; ) {
+    for (let i = 0; i < row.length;) {
       let count = 1;
       while (row[i] === row[i + count] && i < row.length) {
         count++;

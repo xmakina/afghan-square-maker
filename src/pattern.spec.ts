@@ -1,4 +1,4 @@
-import { Pattern } from "./pattern";
+import Pattern from "./pattern";
 
 describe("with a pattern", () => {
   let subject: Pattern;

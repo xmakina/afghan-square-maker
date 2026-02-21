@@ -1,6 +1,12 @@
-import { Instruction } from "instruction";
+import Instruction from "./instruction";
+import Pattern from "./pattern";
 
 export default class Method {
+  static FromPattern(pattern: Pattern) {
+    const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx + 1 % 2 === 1, row))
+    return Method.Generate(pattern.width, instructions)
+  }
+
   static Generate(width: number, instructions: Instruction[]) {
     const condensedInstructions: string[] = [];
     for (let i = 0; i < instructions.length;) {
