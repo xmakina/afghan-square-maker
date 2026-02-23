@@ -4,3 +4,4 @@ export default class Method {
     static FromPattern(pattern: Pattern): string[];
     static Generate(width: number, instructions: Instruction[]): string[];
 }
+//# sourceMappingURL=method.d.ts.map

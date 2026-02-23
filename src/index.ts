@@ -1,2 +1,3 @@
 import Method from './method'
-export default Method
+import Pattern from './pattern'
+export default { Method, Pattern }

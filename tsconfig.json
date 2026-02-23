@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2019",
+    "target": "ES2022",
+    "moduleResolution": "bundler",
+    "composite": true,
+    "declarationMap": true,
     "declaration": true,
     "outDir": "./dist"
   },

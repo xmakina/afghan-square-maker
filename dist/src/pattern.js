@@ -1,7 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const method_1 = require("./method");
-class Pattern {
+import Method from "./method";
+export default class Pattern {
+    height;
+    width;
     constructor(height, width) {
         this.height = height;
         this.width = width;
@@ -10,6 +10,7 @@ class Pattern {
             .map(() => new Array(width).fill(false));
         ;
     }
+    rows;
     getAt(x, y) {
         return this.rows[y][x];
     }
@@ -17,7 +18,7 @@ class Pattern {
         this.rows[x][y] = value;
     }
     toMethod() {
-        return method_1.default.FromPattern(this);
+        return Method.FromPattern(this);
     }
     static FromCanvas(canvas) {
         const context = canvas.getContext("2d");
@@ -32,9 +33,9 @@ class Pattern {
                 pattern.setAt(x, y, pixelAt(x, y));
             }
         }
+        return pattern;
     }
 }
-exports.default = Pattern;
 const getPixelValue = (canvas) => {
     const context = canvas.getContext("2d");
     if (context === null) {

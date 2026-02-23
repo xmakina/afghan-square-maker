@@ -6,5 +6,6 @@ export default class Pattern {
     getAt(x: number, y: number): boolean;
     setAt(x: number, y: number, value?: boolean): void;
     toMethod(): string[];
-    static FromCanvas(canvas: HTMLCanvasElement): void;
+    static FromCanvas(canvas: HTMLCanvasElement): Pattern;
 }
+//# sourceMappingURL=pattern.d.ts.map

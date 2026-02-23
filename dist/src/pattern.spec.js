@@ -1,11 +1,9 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const pattern_1 = require("./pattern");
+import Pattern from "./pattern";
 describe("with a pattern", () => {
     let subject;
     describe("when initialised", () => {
         beforeEach(() => {
-            subject = new pattern_1.default(3, 3);
+            subject = new Pattern(3, 3);
         });
         it("is all false", () => {
             expect(subject.getAt(0, 0)).toBeFalsy();

@@ -1,25 +1,23 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const method_1 = require("./method");
+import Method from "./method";
 describe("with a method", () => {
     describe("with no instructions", () => {
         it("includes cast on", () => {
-            expect(method_1.default.Generate(45, [])[0]).toEqual("Cast on 45");
+            expect(Method.Generate(45, [])[0]).toEqual("Cast on 45");
         });
         it("includes cast off", () => {
-            expect(method_1.default.Generate(45, [])[1]).toEqual("Cast off, weave in ends and block");
+            expect(Method.Generate(45, [])[1]).toEqual("Cast off, weave in ends and block");
         });
     });
     describe("with simple instructions", () => {
         it("adds the rown number", () => {
-            expect(method_1.default.Generate(2, ["some instructions"])[1]).toEqual("Row 1: some instructions");
+            expect(Method.Generate(2, ["some instructions"])[1]).toEqual("Row 1: some instructions");
         });
     });
     describe("with repeating instructions", () => {
         const repeat = "some repeated value";
         let result;
         beforeEach(() => {
-            result = method_1.default.Generate(2, [repeat, repeat, repeat]);
+            result = Method.Generate(2, [repeat, repeat, repeat]);
         });
         it("condenses the repeated rows", () => {
             expect(result.length).toEqual(3);
@@ -32,7 +30,7 @@ describe("with a method", () => {
         const repeat = "some repeated value";
         let result;
         beforeEach(() => {
-            result = method_1.default.Generate(2, [
+            result = Method.Generate(2, [
                 repeat,
                 "123",
                 repeat,
@@ -55,7 +53,7 @@ describe("with a method", () => {
         const repeat = "some repeated value";
         let result;
         beforeEach(() => {
-            result = method_1.default.Generate(2, [
+            result = Method.Generate(2, [
                 "012",
                 repeat,
                 "123",

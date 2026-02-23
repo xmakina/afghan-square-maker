@@ -38,9 +38,10 @@ export default class Pattern {
         pattern.setAt(x, y, pixelAt(x, y))
       }
     }
+
+    return pattern;
   }
 }
-
 
 const getPixelValue = (canvas: HTMLCanvasElement) => {
   const context = canvas.getContext("2d")

@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-class Instruction {
+export default class Instruction {
     static FromRow(isOdd, row) {
         const groupings = [];
         for (let i = 0; i < row.length;) {
@@ -32,7 +30,6 @@ class Instruction {
         return instructions.join(" ");
     }
 }
-exports.default = Instruction;
 const getInstructionKnitFill = (initial, groupings) => {
     if (initial) {
         return groupings.map(KnitFirst);

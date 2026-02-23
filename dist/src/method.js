@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const instruction_1 = require("./instruction");
-class Method {
+import Instruction from "./instruction";
+export default class Method {
     static FromPattern(pattern) {
-        const instructions = pattern.rows.map((row, idx) => instruction_1.default.FromRow(idx + 1 % 2 === 1, row));
+        const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx + 1 % 2 === 1, row));
         return Method.Generate(pattern.width, instructions);
     }
     static Generate(width, instructions) {
@@ -59,4 +57,3 @@ class Method {
         ];
     }
 }
-exports.default = Method;
