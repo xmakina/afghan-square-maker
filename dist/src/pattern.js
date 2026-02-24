@@ -7,14 +7,14 @@ export default class Pattern {
         this.height = height;
         this.width = width;
         this.rows = rows;
-        this.rows = Array(height)
+        this.rows = rows ?? Array(height)
             .fill(false)
             .map(() => new Array(width).fill(false));
     }
     static FromRows(rows) {
         const height = rows.length;
         const width = rows.reduce(toMax, 0);
-        return new Pattern(height, width);
+        return new Pattern(height, width, rows);
     }
     static FromCanvas(canvas) {
         const context = canvas.getContext("2d");

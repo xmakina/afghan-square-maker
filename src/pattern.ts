@@ -6,7 +6,7 @@ export default class Pattern {
     public readonly width: number,
     public readonly rows?: boolean[][],
   ) {
-    this.rows = Array(height)
+    this.rows = rows ?? Array(height)
       .fill(false)
       .map(() => new Array(width).fill(false));
   }
@@ -14,7 +14,7 @@ export default class Pattern {
   static FromRows(rows: boolean[][]): Pattern {
     const height = rows.length;
     const width = rows.reduce(toMax, 0);
-    return new Pattern(height, width);
+    return new Pattern(height, width, rows);
   }
 
   static FromCanvas(canvas: HTMLCanvasElement): Pattern {
