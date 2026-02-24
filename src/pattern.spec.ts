@@ -5,14 +5,13 @@ describe("with a pattern", () => {
 
   describe("when initialised", () => {
     beforeEach(() => {
-      subject = new Pattern(3, 3);
+      subject = Pattern.FromRows([[false, false, false], [false, false, false], [false, false, false]]);
     });
 
     it("is all false", () => {
-      expect(subject.getAt(0, 0)).toBeFalsy();
       expect(subject.rows[0][0]).toBeFalsy();
-      expect(subject.getAt(1, 1)).toBeFalsy();
-      expect(subject.getAt(2, 2)).toBeFalsy();
+      expect(subject.rows[1][2]).toBeFalsy();
+      expect(subject.rows[2][2]).toBeFalsy();
     });
   });
 });
