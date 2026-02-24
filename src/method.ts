@@ -3,8 +3,10 @@ import Pattern from "./pattern";
 
 export default class Method {
   static FromPattern(pattern: Pattern) {
-    const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx + 1 % 2 === 1, row))
-    return Method.Generate(pattern.width, instructions)
+    const instructions = pattern.rows.map((row, idx) =>
+      Instruction.FromRow(idx + (1 % 2) === 1, row),
+    );
+    return Method.Generate(pattern.width, instructions);
   }
 
   static Generate(width: number, instructions: Instruction[]) {
@@ -47,20 +49,32 @@ export default class Method {
         }, true);
 
       if (alternates === false) {
-        alternatingInstructions.push(`Row ${i + 1}: ${condensedInstructions[i]}`);
+        alternatingInstructions.push(
+          `Row ${i + 1}: ${condensedInstructions[i]}`,
+        );
         continue;
       }
 
       if ((i + 1) % 2 === 0) {
-        alternatingInstructions.push(`Row ${i + 1} and All Even Numbered Rows: ${condensedInstructions[i]}`);
-        const remainder = condensedInstructions.slice(i + 1).map((val, idx) => `Row ${i + idx + 2}: ${val}`).filter((_, idx) => idx % 2 === 0);
-        alternatingInstructions.push(...remainder)
+        alternatingInstructions.push(
+          `Row ${i + 1} and All Even Numbered Rows: ${condensedInstructions[i]}`,
+        );
+        const remainder = condensedInstructions
+          .slice(i + 1)
+          .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
+          .filter((_, idx) => idx % 2 === 0);
+        alternatingInstructions.push(...remainder);
         break;
       }
 
-      alternatingInstructions.push(`Row ${i + 1} and All Odd Numbered Rows: ${condensedInstructions[i]}`);
-      const remainder = condensedInstructions.slice(i + 1).map((val, idx) => `Row ${i + idx + 2}: ${val}`).filter((_, idx) => idx % 2 === 0);
-      alternatingInstructions.push(...remainder)
+      alternatingInstructions.push(
+        `Row ${i + 1} and All Odd Numbered Rows: ${condensedInstructions[i]}`,
+      );
+      const remainder = condensedInstructions
+        .slice(i + 1)
+        .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
+        .filter((_, idx) => idx % 2 === 0);
+      alternatingInstructions.push(...remainder);
       break;
     }
 
