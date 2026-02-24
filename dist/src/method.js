@@ -1,7 +1,7 @@
 import Instruction from "./instruction";
 export default class Method {
     static FromPattern(pattern) {
-        const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx + 1 % 2 === 1, row));
+        const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx + (1 % 2) === 1, row));
         return Method.Generate(pattern.width, instructions);
     }
     static Generate(width, instructions) {
@@ -41,12 +41,18 @@ export default class Method {
             }
             if ((i + 1) % 2 === 0) {
                 alternatingInstructions.push(`Row ${i + 1} and All Even Numbered Rows: ${condensedInstructions[i]}`);
-                const remainder = condensedInstructions.slice(i + 1).map((val, idx) => `Row ${i + idx + 2}: ${val}`).filter((_, idx) => idx % 2 === 0);
+                const remainder = condensedInstructions
+                    .slice(i + 1)
+                    .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
+                    .filter((_, idx) => idx % 2 === 0);
                 alternatingInstructions.push(...remainder);
                 break;
             }
             alternatingInstructions.push(`Row ${i + 1} and All Odd Numbered Rows: ${condensedInstructions[i]}`);
-            const remainder = condensedInstructions.slice(i + 1).map((val, idx) => `Row ${i + idx + 2}: ${val}`).filter((_, idx) => idx % 2 === 0);
+            const remainder = condensedInstructions
+                .slice(i + 1)
+                .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
+                .filter((_, idx) => idx % 2 === 0);
             alternatingInstructions.push(...remainder);
             break;
         }

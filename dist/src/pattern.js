@@ -1,24 +1,20 @@
-import Method from "./method";
+const toMax = (acc, row) => Math.max(acc, row.length);
 export default class Pattern {
     height;
     width;
-    constructor(height, width) {
+    rows;
+    constructor(height, width, rows) {
         this.height = height;
         this.width = width;
+        this.rows = rows;
         this.rows = Array(height)
             .fill(false)
             .map(() => new Array(width).fill(false));
-        ;
     }
-    rows;
-    getAt(x, y) {
-        return this.rows[y][x];
-    }
-    setAt(x, y, value = true) {
-        this.rows[x][y] = value;
-    }
-    toMethod() {
-        return Method.FromPattern(this);
+    static FromRows(rows) {
+        const height = rows.length;
+        const width = rows.reduce(toMax, 0);
+        return new Pattern(height, width);
     }
     static FromCanvas(canvas) {
         const context = canvas.getContext("2d");
@@ -30,7 +26,7 @@ export default class Pattern {
         const pattern = new Pattern(height, width);
         for (let y = 0; y < height; ++y) {
             for (let x = 0; x < width; ++x) {
-                pattern.setAt(x, y, pixelAt(x, y));
+                pattern.rows[x][y] = pixelAt(x, y);
             }
         }
         return pattern;
