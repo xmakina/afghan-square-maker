@@ -3,13 +3,14 @@ export default class Pattern {
     height;
     width;
     rows;
-    constructor(height, width, rows = [[]]) {
+    constructor(height, width, rows) {
         this.height = height;
         this.width = width;
-        this.rows = rows;
-        this.rows = rows ?? Array(height)
-            .fill(false)
-            .map(() => new Array(width).fill(false));
+        this.rows =
+            rows ??
+                Array(height)
+                    .fill(false)
+                    .map(() => new Array(width).fill(false));
     }
     static FromRows(rows) {
         const height = rows.length;

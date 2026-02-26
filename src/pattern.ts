@@ -1,14 +1,18 @@
 const toMax = (acc: number, row: boolean[]) => Math.max(acc, row.length);
 
 export default class Pattern {
+  public readonly rows: boolean[][];
+
   private constructor(
     public readonly height: number,
     public readonly width: number,
-    public readonly rows: boolean[][] = [[]],
+    rows?: boolean[][],
   ) {
-    this.rows = rows ?? Array(height)
-      .fill(false)
-      .map(() => new Array(width).fill(false));
+    this.rows =
+      rows ??
+      Array(height)
+        .fill(false)
+        .map(() => new Array(width).fill(false));
   }
 
   static FromRows(rows: boolean[][]): Pattern {
