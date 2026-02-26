@@ -33,10 +33,17 @@ export class Pattern {
         return pattern;
     }
     static AddBorder(subject) {
-        const topRows = Array(subject.width)
+        const topRows = Array(7)
             .fill(false)
-            .map(() => Array(subject.width).fill(false).map((_, idx) => idx % 2 === 1));
-        return Pattern.FromRows([...topRows, ...subject.rows]);
+            .map(() => Array(subject.width + 10)
+            .fill(false)
+            .map((_, idx) => idx % 2 === 1));
+        const imageRows = subject.rows.map((val) => [
+            ...[false, true, false, true, false],
+            ...val,
+            ...[true, false, true, false, true],
+        ]);
+        return Pattern.FromRows([...topRows, ...imageRows, ...topRows]);
     }
 }
 const getPixelValue = (canvas) => {
