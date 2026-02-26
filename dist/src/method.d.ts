@@ -1,7 +1,16 @@
-import Instruction from "./instruction";
 import Pattern from "./pattern";
+type Options = {
+    groupRows?: boolean;
+};
+type InstructionDetails = {
+    from: number;
+    to: number;
+    details: string;
+};
 export default class Method {
-    static FromPattern(pattern: Pattern): string[];
-    static Generate(width: number, instructions: Instruction[]): string[];
+    static FromPattern(pattern: Pattern, options?: Options): string[];
+    private static Generate;
+    static GroupRows(fullInstructions: InstructionDetails[]): InstructionDetails[];
 }
+export {};
 //# sourceMappingURL=method.d.ts.map

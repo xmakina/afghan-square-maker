@@ -1,34 +1,32 @@
-export default class Instruction {
-    static FromRow(isOdd, row) {
-        const groupings = [];
-        for (let i = 0; i < row.length;) {
-            let count = 1;
-            while (row[i] === row[i + count] && i < row.length) {
-                count++;
-            }
-            i = i + count;
-            groupings.push(count);
+export function FromRow(isOdd, row) {
+    const groupings = [];
+    for (let i = 0; i < row.length;) {
+        let count = 1;
+        while (row[i] === row[i + count] && i < row.length) {
+            count++;
         }
-        const instructions = isOdd
-            ? getInstructionKnitFill(row[0], groupings)
-            : getInstructionPerlFill(row[0], groupings);
-        const isRepeated = instructions.reduce((repeats, val, idx, instructions) => {
-            if (!repeats) {
-                return repeats;
-            }
-            if (idx >= instructions.length - 2) {
-                return repeats;
-            }
-            if (val === instructions[idx + 2]) {
-                return true;
-            }
-            return false;
-        }, true);
-        if (isRepeated && instructions.length > 2) {
-            return `(${instructions[0]}, ${instructions[1]}) to last stitch ${instructions[instructions.length - 1]}`;
-        }
-        return instructions.join(" ");
+        i = i + count;
+        groupings.push(count);
     }
+    const instructions = isOdd
+        ? getInstructionKnitFill(row[0], groupings)
+        : getInstructionPerlFill(row[0], groupings);
+    const isRepeated = instructions.reduce((repeats, val, idx, instructions) => {
+        if (!repeats) {
+            return repeats;
+        }
+        if (idx >= instructions.length - 2) {
+            return repeats;
+        }
+        if (val === instructions[idx + 2]) {
+            return true;
+        }
+        return false;
+    }, true);
+    if (isRepeated && instructions.length > 2) {
+        return `(${instructions[0]}, ${instructions[1]}) to last stitch ${instructions[instructions.length - 1]}`;
+    }
+    return instructions.join(" ");
 }
 const getInstructionKnitFill = (initial, groupings) => {
     if (initial) {

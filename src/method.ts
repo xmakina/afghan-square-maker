@@ -1,87 +1,82 @@
-import Instruction from "./instruction";
+import { FromRow } from "./instruction";
 import Pattern from "./pattern";
 
+type Options = {
+  groupRows?: boolean;
+};
+
+type InstructionDetails = {
+  from: number;
+  to: number;
+  details: string;
+};
+
 export default class Method {
-  static FromPattern(pattern: Pattern) {
+  static FromPattern(pattern: Pattern, options: Options = {}) {
     const instructions = pattern.rows.map((row, idx) =>
-      Instruction.FromRow(idx + (1 % 2) === 1, row),
+      FromRow(idx % 2 === 1, row),
     );
-    return Method.Generate(pattern.width, instructions);
+    return Method.Generate(pattern.width, instructions, options);
   }
 
-  static Generate(width: number, instructions: Instruction[]) {
-    const condensedInstructions: string[] = [];
-    for (let i = 0; i < instructions.length;) {
+  private static Generate(
+    width: number,
+    instructions: string[],
+    { groupRows = false }: Options,
+  ) {
+    const wrapInstructions = instructionWrapper(width);
+    const fullInstructions = instructions.map<InstructionDetails>(
+      (val, idx) => ({
+        from: idx,
+        to: idx,
+        details: val,
+      }),
+    );
+
+    if (!groupRows) {
+      return wrapInstructions(fullInstructions);
+    }
+
+    const groupedInstructions = Method.GroupRows(fullInstructions);
+    return wrapInstructions(groupedInstructions);
+    // throw Error("Grouping not implemented");
+  }
+
+  static GroupRows(fullInstructions: InstructionDetails[]) {
+    let groupedInstructions: InstructionDetails[] = [];
+    for (let i = 0; i < fullInstructions.length; i++) {
       let count = 1;
       while (
-        instructions[i] === instructions[i + count] &&
-        i < instructions.length
+        i + count < fullInstructions.length &&
+        fullInstructions[i].details === fullInstructions[i + count].details
       ) {
         count++;
       }
-      condensedInstructions.push(
-        count > 1
-          ? `Work ${count} rows of ${instructions[i]}`
-          : `${instructions[i]}`,
-      );
-      i += count;
-    }
 
-    const alternatingInstructions: string[] = [];
-    for (let i = 0; i < condensedInstructions.length; i++) {
-      if (condensedInstructions[i].startsWith("Work ")) {
-        alternatingInstructions.push(condensedInstructions[i]);
+      if (count > 1) {
+        groupedInstructions.push({
+          from: i,
+          to: i + count,
+          details: fullInstructions[i].details,
+        });
+        i += count - 1;
         continue;
       }
 
-      const alternates = condensedInstructions
-        .slice(i)
-        .reduce((repeats, val, idx) => {
-          if (!repeats || idx % 2 === 1) {
-            // + not same odd/even, skip
-            return repeats;
-          }
-
-          if (val === condensedInstructions[i + 2]) {
-            return true;
-          }
-          return false;
-        }, true);
-
-      if (alternates === false) {
-        alternatingInstructions.push(
-          `Row ${i + 1}: ${condensedInstructions[i]}`,
-        );
-        continue;
-      }
-
-      if ((i + 1) % 2 === 0) {
-        alternatingInstructions.push(
-          `Row ${i + 1} and All Even Numbered Rows: ${condensedInstructions[i]}`,
-        );
-        const remainder = condensedInstructions
-          .slice(i + 1)
-          .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
-          .filter((_, idx) => idx % 2 === 0);
-        alternatingInstructions.push(...remainder);
-        break;
-      }
-
-      alternatingInstructions.push(
-        `Row ${i + 1} and All Odd Numbered Rows: ${condensedInstructions[i]}`,
-      );
-      const remainder = condensedInstructions
-        .slice(i + 1)
-        .map((val, idx) => `Row ${i + idx + 2}: ${val}`)
-        .filter((_, idx) => idx % 2 === 0);
-      alternatingInstructions.push(...remainder);
-      break;
+      groupedInstructions.push(fullInstructions[i]);
     }
 
-    return [
-      `Cast on ${width}`,
-      ...alternatingInstructions,
-      "Cast off, weave in ends and block",
-    ];
+    return groupedInstructions;
   }
 }
+
+const instructionWrapper =
+  (width: number) => (instructions: InstructionDetails[]) => [
+    `Cast on ${width}`,
+    ...instructions.map((val) =>
+      val.from === val.to
+        ? `Row ${val.from + 1}: ${val.details}`
+        : `Work ${val.to - val.from} rows of ${val.details}`,
+    ),
+    "Cast off, weave in ends and block",
+  ];
