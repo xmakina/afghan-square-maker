@@ -1,4 +1,5 @@
-import Instruction from "./instruction";
+import Instruction from "../src/instruction";
+import { HalfCheckerBoardPattern } from "./halfCheckerBoard";
 
 describe("when given a single blank", () => {
   const row = [false];
@@ -50,7 +51,23 @@ describe("when given a double fill", () => {
   });
 });
 
-describe("when given an alternating fill", () => {
+describe("when given a double blank", () => {
+  const row = [false, false];
+  describe("when on an odd row", () => {
+    const isOdd = true;
+    it("calls for a knit", () => {
+      expect(Instruction.FromRow(isOdd, row)).toEqual("P2");
+    });
+  });
+  describe("when on an even row", () => {
+    const isOdd = false;
+    it("calls for a perl", () => {
+      expect(Instruction.FromRow(isOdd, row)).toEqual("K2");
+    });
+  });
+});
+
+describe("when given an alternating pattern", () => {
   const row = [true, false];
   describe("when on an odd row", () => {
     const isOdd = true;
@@ -116,6 +133,25 @@ describe("when given a repeating pattern", () => {
       expect(Instruction.FromRow(isOdd, row)).toEqual(
         "(P1, K1) to last stitch P1",
       );
+    });
+  });
+
+  describe("with a half checkerboard", () => {
+    let result: string[];
+    beforeEach(() => {
+      result = HalfCheckerBoardPattern.map((val, idx) =>
+        Instruction.FromRow(idx % 2 === 1, val),
+      );
+    });
+
+    it("captures the correct instructions", () => {
+      expect(result[0]).toEqual("(K1, P1) to last stitch K1");
+      expect(result[1]).toEqual("(K1, P1) to last stitch K1");
+      expect(result[2]).toEqual("(K1, P1) to last stitch K1");
+      expect(result[3]).toEqual("(K1, P1) to last stitch K1");
+      expect(result[4]).toEqual("K7");
+      expect(result[5]).toEqual("P7");
+      expect(result[6]).toEqual("K7");
     });
   });
 });

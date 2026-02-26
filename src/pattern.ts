@@ -4,7 +4,7 @@ export default class Pattern {
   private constructor(
     public readonly height: number,
     public readonly width: number,
-    public readonly rows?: boolean[][],
+    public readonly rows: boolean[][] = [[]],
   ) {
     this.rows = rows ?? Array(height)
       .fill(false)
@@ -28,7 +28,7 @@ export default class Pattern {
     const pattern = new Pattern(height, width);
     for (let y = 0; y < height; ++y) {
       for (let x = 0; x < width; ++x) {
-        pattern.rows[x][y] = pixelAt(x, y);
+        pattern.rows[y][x] = pixelAt(x, y);
       }
     }
 

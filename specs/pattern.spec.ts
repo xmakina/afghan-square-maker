@@ -1,11 +1,14 @@
-import Pattern from "./pattern";
+import Pattern from "../src/pattern";
 
 describe("with a pattern", () => {
   let subject: Pattern;
 
   describe("when initialised", () => {
     beforeEach(() => {
-      subject = Pattern.FromRows([[true, false, false], [false, true, false], [false, false, true]]);
+      subject = Pattern.FromRows([
+        [true, false, false],
+        [false, true, false],
+        [false, false, true]]);
     });
 
     it("is all false", () => {
