@@ -1,4 +1,4 @@
-import Instruction from "../src/instruction";
+import { Instruction } from "../src/instruction";
 import { HalfCheckerBoardPattern } from "./halfCheckerBoard";
 
 describe("when given a single blank", () => {

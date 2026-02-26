@@ -1,6 +1,6 @@
 const toMax = (acc: number, row: boolean[]) => Math.max(acc, row.length);
 
-export default class Pattern {
+export class Pattern {
   public readonly rows: boolean[][];
 
   private constructor(

@@ -1,5 +1,5 @@
-import Instruction from "./instruction";
-import Pattern from "./pattern";
+import { Instruction } from "./instruction";
+import {Pattern} from "./pattern";
 
 type Options = {
   groupRows?: boolean;
@@ -11,7 +11,7 @@ type InstructionDetails = {
   details: string;
 };
 
-export default class Method {
+export class Method {
   static FromPattern(pattern: Pattern, options: Options = {}) {
     const instructions = pattern.rows.map((row, idx) =>
       Instruction.FromRow(idx % 2 === 1, row),

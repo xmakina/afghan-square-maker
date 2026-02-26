@@ -1,8 +1,3 @@
-import Method from './method';
-import Pattern from './pattern';
-declare const _default: {
-    Method: typeof Method;
-    Pattern: typeof Pattern;
-};
-export default _default;
+export { Method } from "./method";
+export { Pattern } from "./pattern";
 //# sourceMappingURL=index.d.ts.map

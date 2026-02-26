@@ -1,5 +1,5 @@
-import Instruction from "./instruction";
-export default class Method {
+import { Instruction } from "./instruction";
+export class Method {
     static FromPattern(pattern, options = {}) {
         const instructions = pattern.rows.map((row, idx) => Instruction.FromRow(idx % 2 === 1, row));
         return Method.Generate(pattern.width, instructions, options);

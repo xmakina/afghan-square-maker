@@ -1,4 +1,4 @@
-export default class Instruction {
+export class Instruction {
     static FromRow(isOdd, row) {
         const groupings = [];
         for (let i = 0; i < row.length;) {

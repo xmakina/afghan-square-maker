@@ -1,4 +1,4 @@
-import Pattern from "./pattern";
+import { Pattern } from "./pattern";
 type Options = {
     groupRows?: boolean;
 };
@@ -7,7 +7,7 @@ type InstructionDetails = {
     to: number;
     details: string;
 };
-export default class Method {
+export declare class Method {
     static FromPattern(pattern: Pattern, options?: Options): string[];
     private static Generate;
     static GroupRows(fullInstructions: InstructionDetails[]): InstructionDetails[];

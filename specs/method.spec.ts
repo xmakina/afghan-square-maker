@@ -1,5 +1,5 @@
-import Method from "../src/method";
-import Pattern from "../src/pattern";
+import { Method } from "../src/method";
+import { Pattern } from "../src/pattern";
 import { HalfCheckerBoardPattern } from "./halfCheckerBoard";
 
 describe("with a method", () => {

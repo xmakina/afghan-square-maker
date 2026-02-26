@@ -1,5 +1,5 @@
 const toMax = (acc, row) => Math.max(acc, row.length);
-export default class Pattern {
+export class Pattern {
     height;
     width;
     rows;

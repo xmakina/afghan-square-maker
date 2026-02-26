@@ -1,4 +1,4 @@
-export default abstract class Instruction {
+export abstract class Instruction {
   static FromRow(isOdd: boolean, row: boolean[]) {
     const groupings = [];
     for (let i = 0; i < row.length; ) {

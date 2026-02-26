@@ -1,4 +1,4 @@
-export default class Pattern {
+export declare class Pattern {
     readonly height: number;
     readonly width: number;
     readonly rows: boolean[][];
