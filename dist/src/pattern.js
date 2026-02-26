@@ -3,7 +3,7 @@ export default class Pattern {
     height;
     width;
     rows;
-    constructor(height, width, rows) {
+    constructor(height, width, rows = [[]]) {
         this.height = height;
         this.width = width;
         this.rows = rows;
