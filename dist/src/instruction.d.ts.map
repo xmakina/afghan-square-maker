@@ -1,1 +1,1 @@
-{"version":3,"file":"instruction.d.ts","sourceRoot":"","sources":["../../src/instruction.ts"],"names":[],"mappings":"AAAA,wBAAgB,OAAO,CAAC,KAAK,EAAE,OAAO,EAAE,GAAG,EAAE,OAAO,EAAE,UAoCrD"}
+{"version":3,"file":"instruction.d.ts","sourceRoot":"","sources":["../../src/instruction.ts"],"names":[],"mappings":"AAAA,MAAM,CAAC,OAAO,CAAC,QAAQ,OAAO,WAAW;IACvC,MAAM,CAAC,OAAO,CAAC,KAAK,EAAE,OAAO,EAAE,GAAG,EAAE,OAAO,EAAE;CAwC9C"}

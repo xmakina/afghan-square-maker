@@ -1,4 +1,4 @@
-import { FromRow } from "./instruction";
+import Instruction from "./instruction";
 import Pattern from "./pattern";
 
 type Options = {
@@ -14,7 +14,7 @@ type InstructionDetails = {
 export default class Method {
   static FromPattern(pattern: Pattern, options: Options = {}) {
     const instructions = pattern.rows.map((row, idx) =>
-      FromRow(idx % 2 === 1, row),
+      Instruction.FromRow(idx % 2 === 1, row),
     );
     return Method.Generate(pattern.width, instructions, options);
   }

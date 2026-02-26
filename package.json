@@ -10,7 +10,7 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "tsc",
+    "build": "rimraf ./dist && tsc",
     "prepare": "husky"
   },
   "repository": {
@@ -37,6 +37,7 @@
     "jest": "^30.2.0",
     "jest-theories": "^1.5.1",
     "moq.ts": "^10.0.8",
+    "rimraf": "^6.1.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   }

@@ -1,2 +1,4 @@
-export declare function FromRow(isOdd: boolean, row: boolean[]): string;
+export default abstract class Instruction {
+    static FromRow(isOdd: boolean, row: boolean[]): string;
+}
 //# sourceMappingURL=instruction.d.ts.map
