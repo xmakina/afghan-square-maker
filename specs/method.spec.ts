@@ -1,4 +1,4 @@
-import { Method } from "../src/method";
+import Method from "../src/method";
 import { Pattern } from "../src/pattern";
 import { HalfCheckerBoardPattern } from "./halfCheckerBoard";
 

@@ -1,2 +1,3 @@
-export { Method } from "./method";
-export { Pattern } from "./pattern";
+import Method from "./method";
+import { Pattern } from "./pattern";
+export { Method, Pattern };

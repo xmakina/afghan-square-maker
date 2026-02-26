@@ -7,7 +7,7 @@ type InstructionDetails = {
     to: number;
     details: string;
 };
-export declare class Method {
+export default class Method {
     static FromPattern(pattern: Pattern, options?: Options): string[];
     private static Generate;
     static GroupRows(fullInstructions: InstructionDetails[]): InstructionDetails[];
