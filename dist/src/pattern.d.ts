@@ -5,5 +5,6 @@ export default class Pattern {
     private constructor();
     static FromRows(rows: boolean[][]): Pattern;
     static FromCanvas(canvas: HTMLCanvasElement): Pattern;
+    static AddBorder(subject: Pattern): Pattern;
 }
 //# sourceMappingURL=pattern.d.ts.map

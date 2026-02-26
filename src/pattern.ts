@@ -38,6 +38,14 @@ export default class Pattern {
 
     return pattern;
   }
+
+  static AddBorder(subject: Pattern): Pattern {
+    const topRows = Array(subject.width)
+      .fill(false)
+      .map(() => Array(subject.width).fill(false).map((_, idx) => idx % 2 === 1))
+    
+    return Pattern.FromRows([...topRows, ...subject.rows])
+  }
 }
 
 const getPixelValue = (canvas: HTMLCanvasElement) => {
