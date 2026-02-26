@@ -1,5 +1,14 @@
 const toMax = (acc: number, row: boolean[]) => Math.max(acc, row.length);
 
+const isOdd = (val: number) => (val + 1) % 2 === 1;
+
+const addBorderValue = (row: number, stitch: number) =>
+  isOdd(row) && isOdd(stitch)
+    ? false
+    : !isOdd(row) && !isOdd(stitch)
+      ? false
+      : true;
+
 export class Pattern {
   public readonly rows: boolean[][];
 
@@ -42,19 +51,32 @@ export class Pattern {
   static AddBorder(subject: Pattern): Pattern {
     const topRows = Array(7)
       .fill(false)
-      .map(() =>
+      .map((_, row) =>
         Array(subject.width + 10)
           .fill(false)
-          .map((_, idx) => idx % 2 === 1),
+          .map((_, stitch) => addBorderValue(row, stitch)),
       );
 
-    const imageRows = subject.rows.map((val) => [
-      ...[false, true, false, true, false],
+    const imageRows = subject.rows.map((val, row) => [
+      ...Array(5)
+        .fill(false)
+        .map((_, stitch) => addBorderValue(row + 7, stitch)),
       ...val,
-      ...[true, false, true, false, true],
+      ...Array(5)
+        .fill(false)
+        .map((_, stitch) => addBorderValue(row + 7, stitch)),
+      ,
     ]);
 
     return Pattern.FromRows([...topRows, ...imageRows, ...topRows]);
+  }
+
+  static AddGapRows(subject: Pattern): Pattern {
+    const gapRows = subject.rows.flatMap((row) => {
+      return [row, new Array(subject.width).fill(false)];
+    });
+
+    return Pattern.FromRows(gapRows);
   }
 }
 
@@ -71,3 +93,11 @@ const getPixelValue = (canvas: HTMLCanvasElement) => {
     return data.data[targetPixel] < 5;
   };
 };
+
+const interleave = (arr: boolean[]) =>
+  Array.from(
+    {
+      length: arr.length,
+    },
+    (_, i) => arr.map((r) => r[i] ?? null),
+  ).flat();

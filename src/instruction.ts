@@ -3,7 +3,7 @@ export abstract class Instruction {
     const groupings = [];
     for (let i = 0; i < row.length; ) {
       let count = 1;
-      while (row[i] === row[i + count] && i < row.length) {
+      while (row[i] === row[i + count] && i + count < row.length) {
         count++;
       }
       i = i + count;

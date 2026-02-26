@@ -6,5 +6,6 @@ export declare class Pattern {
     static FromRows(rows: boolean[][]): Pattern;
     static FromCanvas(canvas: HTMLCanvasElement): Pattern;
     static AddBorder(subject: Pattern): Pattern;
+    static AddGapRows(subject: Pattern): Pattern;
 }
 //# sourceMappingURL=pattern.d.ts.map
