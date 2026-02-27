@@ -10,6 +10,7 @@ const addBorderValue = (rowNumber, stitchNumber) => isOdd(rowNumber) && isOdd(st
     : !isOdd(rowNumber) && !isOdd(stitchNumber)
         ? false
         : true;
+const arrayMatch = (a, b) => a.length === b.length && a.every((val, idx) => val === b[idx]);
 export class Pattern {
     height;
     width;
@@ -44,6 +45,15 @@ export class Pattern {
         return pattern;
     }
     static AddBorder(subject) {
+        const targetRatio = 3 / 2;
+        const currentRatio = subject.width / subject.height;
+        const widthDiff = subject.width - subject.height * targetRatio;
+        if (currentRatio < targetRatio) {
+            // too wide, increase height
+        }
+        else if (currentRatio > targetRatio) {
+            // too tall, increase width
+        }
         const topRows = Array(7)
             .fill(false)
             .map((_, rowIdx) => Array(subject.width + 10)
@@ -67,7 +77,13 @@ export class Pattern {
         return Pattern.FromRows([...topRows, ...imageRows, ...bottomRows]);
     }
     static AddGapRows(subject) {
-        const gapRows = subject.rows.flatMap((row) => {
+        const gapRows = subject.rows.flatMap((row, rowIdx) => {
+            if (rowIdx > 0 &&
+                rowIdx < subject.rows.length - 1 &&
+                arrayMatch(row, subject.rows[rowIdx - 1]) &&
+                !arrayMatch(row, subject.rows[rowIdx + 1])) {
+                return [];
+            }
             return [row, new Array(subject.width).fill(false)];
         });
         return Pattern.FromRows(gapRows);

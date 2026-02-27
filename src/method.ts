@@ -73,10 +73,10 @@ export default class Method {
 const instructionWrapper =
   (width: number) => (instructions: InstructionDetails[]) => [
     `Cast on ${width}`,
-    ...instructions.map((val) =>
+    ...instructions.map((val, idx) =>
       val.from === val.to
         ? `Row ${val.from + 1}: ${val.details}`
-        : `Work ${val.to - val.from} rows of ${val.details}`,
+        : `${idx > 0 ? `Rows ${val.from}-${val.to}:` : ""} Work ${val.to - val.from} rows of ${val.details}`,
     ),
     "Cast off, weave in ends and block",
   ];

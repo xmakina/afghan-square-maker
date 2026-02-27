@@ -15,6 +15,9 @@ const addBorderValue = (rowNumber: number, stitchNumber: number) =>
       ? false
       : true;
 
+const arrayMatch = <T>(a: T[], b: T[]) =>
+  a.length === b.length && a.every((val, idx) => val === b[idx]);
+
 export class Pattern {
   public readonly rows: boolean[][];
 
@@ -55,6 +58,16 @@ export class Pattern {
   }
 
   static AddBorder(subject: Pattern): Pattern {
+    const targetRatio = 3 / 2;
+    const currentRatio = subject.width / subject.height;
+    const widthDiff = subject.width - subject.height * targetRatio;
+
+    if (currentRatio < targetRatio) {
+      // too wide, increase height
+    } else if (currentRatio > targetRatio) {
+      // too tall, increase width
+    }
+
     const topRows = Array(7)
       .fill(false)
       .map((_, rowIdx) =>
@@ -89,7 +102,15 @@ export class Pattern {
   }
 
   static AddGapRows(subject: Pattern): Pattern {
-    const gapRows = subject.rows.flatMap((row) => {
+    const gapRows = subject.rows.flatMap((row, rowIdx) => {
+      if (
+        rowIdx > 0 &&
+        rowIdx < subject.rows.length - 1 &&
+        arrayMatch(row, subject.rows[rowIdx - 1]) &&
+        !arrayMatch(row, subject.rows[rowIdx + 1])
+      ) {
+        return [];
+      }
       return [row, new Array(subject.width).fill(false)];
     });
 
