@@ -4,7 +4,7 @@ import { HalfCheckerBoardPattern } from "./halfCheckerBoard";
 describe("when given a single blank", () => {
   const row = [false];
   describe("when on an odd row", () => {
-    // perl is blank on even row
+    // perl is blank on odd row
     const isOdd = true;
     it("calls for a perl", () => {
       expect(Instruction.FromRow(isOdd, row)).toEqual("P1");

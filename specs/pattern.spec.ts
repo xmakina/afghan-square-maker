@@ -116,11 +116,11 @@ describe("with a pattern", () => {
         ]);
 
         // bottom border
-        expect(subject.rows[17]).toEqual(patternedOdd);
-        expect(subject.rows[18]).toEqual(patternedEven);
+        expect(subject.rows[17]).toEqual(patternedEven);
+        expect(subject.rows[18]).toEqual(patternedOdd);
         // end of bottom border
-        expect(subject.rows[22]).toEqual(patternedEven);
-        expect(subject.rows[23]).toEqual(patternedOdd);
+        expect(subject.rows[22]).toEqual(patternedOdd);
+        expect(subject.rows[23]).toEqual(patternedEven);
       });
     });
 

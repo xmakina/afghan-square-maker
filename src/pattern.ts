@@ -1,11 +1,17 @@
 const toMax = (acc: number, row: boolean[]) => Math.max(acc, row.length);
 
-const isOdd = (val: number) => (val + 1) % 2 === 1;
+const isOdd = (val: number) => {
+  if (val === 0) {
+    throw new Error("Row number, not ID");
+  }
 
-const addBorderValue = (row: number, stitch: number) =>
-  isOdd(row) && isOdd(stitch)
+  return val % 2 === 1;
+};
+
+const addBorderValue = (rowNumber: number, stitchNumber: number) =>
+  isOdd(rowNumber) && isOdd(stitchNumber)
     ? false
-    : !isOdd(row) && !isOdd(stitch)
+    : !isOdd(rowNumber) && !isOdd(stitchNumber)
       ? false
       : true;
 
@@ -51,24 +57,35 @@ export class Pattern {
   static AddBorder(subject: Pattern): Pattern {
     const topRows = Array(7)
       .fill(false)
-      .map((_, row) =>
+      .map((_, rowIdx) =>
         Array(subject.width + 10)
           .fill(false)
-          .map((_, stitch) => addBorderValue(row, stitch)),
+          .map((_, stitchIdx) => addBorderValue(rowIdx + 1, stitchIdx + 1)),
       );
 
-    const imageRows = subject.rows.map((val, row) => [
+    const imageRows = subject.rows.map((val, rowIdx) => [
       ...Array(5)
         .fill(false)
-        .map((_, stitch) => addBorderValue(row + 7, stitch)),
+        .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1)),
       ...val,
       ...Array(5)
         .fill(false)
-        .map((_, stitch) => addBorderValue(row + 7, stitch)),
+        .map((_, stitchIdx) =>
+          addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + val.length - 1),
+        ),
       ,
     ]);
+    const bottomRows = Array(7)
+      .fill(false)
+      .map((_, rowIdx) =>
+        Array(subject.width + 10)
+          .fill(false)
+          .map((_, stitchIdx) =>
+            addBorderValue(rowIdx + 1 + (imageRows.length - 1), stitchIdx + 1),
+          ),
+      );
 
-    return Pattern.FromRows([...topRows, ...imageRows, ...topRows]);
+    return Pattern.FromRows([...topRows, ...imageRows, ...bottomRows]);
   }
 
   static AddGapRows(subject: Pattern): Pattern {

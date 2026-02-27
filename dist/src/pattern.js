@@ -1,8 +1,13 @@
 const toMax = (acc, row) => Math.max(acc, row.length);
-const isOdd = (val) => (val + 1) % 2 === 1;
-const addBorderValue = (row, stitch) => isOdd(row) && isOdd(stitch)
+const isOdd = (val) => {
+    if (val === 0) {
+        throw new Error("Row number, not ID");
+    }
+    return val % 2 === 1;
+};
+const addBorderValue = (rowNumber, stitchNumber) => isOdd(rowNumber) && isOdd(stitchNumber)
     ? false
-    : !isOdd(row) && !isOdd(stitch)
+    : !isOdd(rowNumber) && !isOdd(stitchNumber)
         ? false
         : true;
 export class Pattern {
@@ -41,20 +46,25 @@ export class Pattern {
     static AddBorder(subject) {
         const topRows = Array(7)
             .fill(false)
-            .map((_, row) => Array(subject.width + 10)
+            .map((_, rowIdx) => Array(subject.width + 10)
             .fill(false)
-            .map((_, stitch) => addBorderValue(row, stitch)));
-        const imageRows = subject.rows.map((val, row) => [
+            .map((_, stitchIdx) => addBorderValue(rowIdx + 1, stitchIdx + 1)));
+        const imageRows = subject.rows.map((val, rowIdx) => [
             ...Array(5)
                 .fill(false)
-                .map((_, stitch) => addBorderValue(row + 7, stitch)),
+                .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1)),
             ...val,
             ...Array(5)
                 .fill(false)
-                .map((_, stitch) => addBorderValue(row + 7, stitch)),
+                .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + val.length - 1)),
             ,
         ]);
-        return Pattern.FromRows([...topRows, ...imageRows, ...topRows]);
+        const bottomRows = Array(7)
+            .fill(false)
+            .map((_, rowIdx) => Array(subject.width + 10)
+            .fill(false)
+            .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + (imageRows.length - 1), stitchIdx + 1)));
+        return Pattern.FromRows([...topRows, ...imageRows, ...bottomRows]);
     }
     static AddGapRows(subject) {
         const gapRows = subject.rows.flatMap((row) => {
