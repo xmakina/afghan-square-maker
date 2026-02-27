@@ -58,16 +58,6 @@ export class Pattern {
   }
 
   static AddBorder(subject: Pattern): Pattern {
-    const targetRatio = 3 / 2;
-    const currentRatio = subject.width / subject.height;
-    const widthDiff = subject.width - subject.height * targetRatio;
-
-    if (currentRatio < targetRatio) {
-      // too wide, increase height
-    } else if (currentRatio > targetRatio) {
-      // too tall, increase width
-    }
-
     const topRows = Array(7)
       .fill(false)
       .map((_, rowIdx) =>
@@ -131,11 +121,3 @@ const getPixelValue = (canvas: HTMLCanvasElement) => {
     return data.data[targetPixel] < 5;
   };
 };
-
-const interleave = (arr: boolean[]) =>
-  Array.from(
-    {
-      length: arr.length,
-    },
-    (_, i) => arr.map((r) => r[i] ?? null),
-  ).flat();
