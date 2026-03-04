@@ -10,7 +10,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "build": "rimraf ./dist && tsc",
+    "clean": "rimraf ./dist",
+    "build": "tsc",
     "prepare": "husky"
   },
   "repository": {

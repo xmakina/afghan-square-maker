@@ -3,6 +3,7 @@ import { Pattern } from "./pattern";
 
 type Options = {
   groupRows?: boolean;
+  groupRepeated?: boolean;
 };
 
 type InstructionDetails = {
@@ -14,7 +15,7 @@ type InstructionDetails = {
 export default class Method {
   static FromPattern(pattern: Pattern, options: Options = {}) {
     const instructions = pattern.rows.map((row, idx) =>
-      Instruction.FromRow((idx + 1) % 2 === 1, row),
+      Instruction.FromRow(idx % 2 === 1, row),
     );
     return Method.Generate(pattern.width, instructions, options);
   }
@@ -22,7 +23,7 @@ export default class Method {
   private static Generate(
     width: number,
     instructions: string[],
-    { groupRows = false }: Options,
+    { groupRows = false, groupRepeated = false }: Options,
   ) {
     const wrapInstructions = instructionWrapper(width);
     const fullInstructions = instructions.map<InstructionDetails>(
@@ -38,8 +39,13 @@ export default class Method {
     }
 
     const groupedInstructions = Method.GroupRows(fullInstructions);
-    return wrapInstructions(groupedInstructions);
-    // throw Error("Grouping not implemented");
+    if (!groupRepeated) {
+      return wrapInstructions(groupedInstructions);
+    }
+
+    const groupedRepeatedInstructions =
+      Method.GroupRepeated(groupedInstructions);
+    return wrapInstructions(groupedRepeatedInstructions);
   }
 
   static GroupRows(fullInstructions: InstructionDetails[]) {
@@ -68,6 +74,32 @@ export default class Method {
 
     return groupedInstructions;
   }
+
+  static GroupRepeated(fullInstructions: InstructionDetails[]) {
+    for (let i = 0; i < fullInstructions.length; i++) {
+      if (fullInstructions[i].details === fullInstructions[i + 2].details) {
+        const keepsRepeating = fullInstructions
+          .slice(i + 2)
+          .reduce((acc, val, idx, list) => {
+            return (acc && idx % 2 === 1) || val.details === list[0].details;
+          }, true);
+        if (keepsRepeating) {
+          const start = fullInstructions.slice(0, i - 1);
+          const repeatedInstruction: InstructionDetails = {
+            from: i,
+            to: fullInstructions.length - 1,
+            details: "And all odd",
+          };
+          const remaining = fullInstructions
+            .slice(i)
+            .filter((_, idx) => idx % 2 === 1);
+          return [...start, repeatedInstruction, ...remaining];
+        } else {
+          return fullInstructions;
+        }
+      }
+    }
+  }
 }
 
 const instructionWrapper =
@@ -76,7 +108,7 @@ const instructionWrapper =
     ...instructions.map((val, idx) =>
       val.from === val.to
         ? `Row ${val.from + 1}: ${val.details}`
-        : `${idx > 0 ? `Rows ${val.from}-${val.to}:` : ""} Work ${val.to - val.from} rows of ${val.details}`,
+        : `${idx > 0 ? `Rows ${val.from + 1}-${val.to}: ` : ""}Work ${val.to - val.from} rows of ${val.details}`,
     ),
     "Cast off, weave in ends and block",
   ];

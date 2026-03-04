@@ -68,13 +68,7 @@ export class Pattern {
         return Pattern.FromRows([...topRows, ...imageRows, ...bottomRows]);
     }
     static AddGapRows(subject) {
-        const gapRows = subject.rows.flatMap((row, rowIdx) => {
-            if (rowIdx > 0 &&
-                rowIdx < subject.rows.length - 1 &&
-                arrayMatch(row, subject.rows[rowIdx - 1]) &&
-                !arrayMatch(row, subject.rows[rowIdx + 1])) {
-                return [];
-            }
+        const gapRows = subject.rows.flatMap((row) => {
             return [row, new Array(subject.width).fill(false)];
         });
         return Pattern.FromRows(gapRows);
