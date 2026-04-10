@@ -1,6 +1,6 @@
 {
   "name": "afghan-square-maker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert a 1bit canvas to a knitting pattern",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

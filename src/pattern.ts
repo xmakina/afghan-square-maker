@@ -26,11 +26,13 @@ export class Pattern {
     public readonly width: number,
     rows?: boolean[][],
   ) {
+    const fullWidth = width % 2 === 0 ? width + 1 : width;
+
     this.rows =
       rows ??
       Array(height)
         .fill(false)
-        .map(() => new Array(width).fill(false));
+        .map(() => new Array(fullWidth).fill(false));
   }
 
   static FromRows(rows: boolean[][]): Pattern {

@@ -18,11 +18,12 @@ export class Pattern {
     constructor(height, width, rows) {
         this.height = height;
         this.width = width;
+        const fullWidth = width % 2 === 0 ? width + 1 : width;
         this.rows =
             rows ??
                 Array(height)
                     .fill(false)
-                    .map(() => new Array(width).fill(false));
+                    .map(() => new Array(fullWidth).fill(false));
     }
     static FromRows(rows) {
         const height = rows.length;
@@ -50,15 +51,16 @@ export class Pattern {
             .map((_, rowIdx) => Array(subject.width + 10)
             .fill(false)
             .map((_, stitchIdx) => addBorderValue(rowIdx + 1, stitchIdx + 1)));
+        const leftBorder = (rowIdx) => Array(5)
+            .fill(false)
+            .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1));
+        const rightBorder = (rowIdx, width) => Array(5)
+            .fill(false)
+            .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + width - 1));
         const imageRows = subject.rows.map((val, rowIdx) => [
-            ...Array(5)
-                .fill(false)
-                .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1)),
+            ...leftBorder(rowIdx),
             ...val,
-            ...Array(5)
-                .fill(false)
-                .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + val.length - 1)),
-            ,
+            ...rightBorder(rowIdx, val.length),
         ]);
         const bottomRows = Array(7)
             .fill(false)
@@ -82,6 +84,6 @@ const getPixelValue = (canvas) => {
     const data = context.getImageData(0, 0, canvas.width, canvas.height);
     return (x, y) => {
         const targetPixel = (y * canvas.width + x) * 4;
-        return data.data[targetPixel] < 5;
+        return data.data[targetPixel] < 64;
     };
 };
