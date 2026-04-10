@@ -110,6 +110,6 @@ const getPixelValue = (canvas: HTMLCanvasElement) => {
 
   return (x: number, y: number) => {
     const targetPixel = (y * canvas.width + x) * 4;
-    return data.data[targetPixel] < 5;
+    return data.data[targetPixel] < 64;
   };
 };
