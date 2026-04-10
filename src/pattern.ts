@@ -66,18 +66,24 @@ export class Pattern {
           .map((_, stitchIdx) => addBorderValue(rowIdx + 1, stitchIdx + 1)),
       );
 
-    const imageRows = subject.rows.map((val, rowIdx) => [
-      ...Array(5)
+    const leftBorder = (rowIdx: number) =>
+      Array(5)
         .fill(false)
-        .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1)),
-      ...val,
-      ...Array(5)
+        .map((_, stitchIdx) => addBorderValue(rowIdx + 1 + 7, stitchIdx + 1));
+
+    const rightBorder = (rowIdx: number, width: number) =>
+      Array(5)
         .fill(false)
         .map((_, stitchIdx) =>
-          addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + val.length - 1),
-        ),
-      ,
+          addBorderValue(rowIdx + 1 + 7, stitchIdx + 1 + width - 1),
+        );
+
+    const imageRows = subject.rows.map((val, rowIdx) => [
+      ...leftBorder(rowIdx),
+      ...val,
+      ...rightBorder(rowIdx, val.length),
     ]);
+
     const bottomRows = Array(7)
       .fill(false)
       .map((_, rowIdx) =>
